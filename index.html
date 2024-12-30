@@ -1,4 +1,4 @@
-
+                   
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Publicar Obra de Arte</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -68,7 +71,6 @@
 <body>
 
 <h1>Publicar Obra de Arte</h1>
-<button class="home-button" onclick="goHome()">Home</button>
 <form id="artworkForm">
     <input type="text" id="author" placeholder="Nome do Autor" required>
     <input type="text" id="title" placeholder="Título da Obra" required>
@@ -182,9 +184,49 @@
          reader.readAsDataURL(mediaFile);
          this.reset(); // Limpa o formulário após publicação
      });
-     function goHome() {
-   window.location.href='pagina_inicial.html';
-}
+         // Configuração do Firebase
+    const firebaseConfig = {
+        apiKey: "SUA_API_KEY",
+        authDomain: "SEU_AUTH_DOMAIN",
+        projectId: "SEU_PROJECT_ID",
+        storageBucket: "SEU_STORAGE_BUCKET",
+        messagingSenderId: "SEU_MESSAGING_SENDER_ID",
+        appId: "SEU_APP_ID"
+    };
+
+    // Inicializando o Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const storage = firebase.storage();
+
+    document.getElementById('uploadButton').onclick = function() {
+        const file = document.getElementById('fileInput').files[0];
+        if (file) {
+            const storageRef = storage.ref('imagens/' + file.name);
+            const uploadTask = storageRef.put(file);
+
+            uploadTask.on('state_changed', 
+                (snapshot) => {
+                    // Progresso do upload
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    document.getElementById('uploadStatus').innerText = 'Progresso: ' + progress.toFixed(2) + '%';
+                }, 
+                (error) => {
+                    // Erro no upload
+                    console.error('Erro ao enviar:', error);
+                    document.getElementById('uploadStatus').innerText = 'Erro ao enviar imagem.';
+                }, 
+                () => {
+                    // Upload completo
+                    uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                        console.log('Imagem disponível em:', downloadURL);
+                        document.getElementById('uploadStatus').innerText = 'Imagem enviada com sucesso!';
+                    });
+                }
+            );
+        } else {
+            alert("Por favor, escolha uma imagem para enviar.");
+        }
+    };
 </script>
 
 </body>
