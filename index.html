@@ -40,7 +40,7 @@
         body.dark-theme {
             --background-light: var(--background-dark);
             --text-light: var(--text-dark);
-            --light-gray: var(--background-dark);
+            --light-gray: var(--surface-dark);
             --border-color: #333;
         }
 
@@ -90,7 +90,7 @@
             font-weight: 600;
         }
 
-        .form-group input {
+        .form-group input, .form-group textarea, .form-group select {
             width: 100%;
             padding: 12px;
             border: 1px solid var(--border-color);
@@ -98,6 +98,7 @@
             box-sizing: border-box;
             background-color: var(--light-gray);
             color: var(--text-light);
+            font-family: var(--font-family);
         }
 
         .btn {
@@ -162,49 +163,8 @@
             padding: 0 15px;
         }
 
-        /* Post Feed */
-        .post-card {
-            background-color: var(--background-light);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-        .post-header {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-        }
-        .post-header img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin-right: 10px;
-            object-fit: cover;
-        }
-        .post-header .username {
-            font-weight: bold;
-        }
-        .post-media {
-            width: 100%;
-            max-height: 600px;
-            object-fit: contain;
-            background-color: var(--light-gray);
-        }
-        .post-content {
-            padding: 15px;
-        }
-        .post-content h3 {
-            margin: 0 0 5px 0;
-        }
-        .post-content .meta {
-            font-size: 14px;
-            color: #888;
-            margin-bottom: 10px;
-        }
-
-        /* Create Post Button */
-        .create-post-btn {
+        /* Floating Action Button */
+        .fab {
             position: fixed;
             bottom: 90px;
             right: 20px;
@@ -218,9 +178,12 @@
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             z-index: 999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* Modal for Forms (Create Post, Settings, etc.) */
+        /* Modal for Forms */
         .modal {
             position: fixed;
             top: 0;
@@ -245,79 +208,132 @@
             max-height: 90vh;
             overflow-y: auto;
         }
+        .modal-content h2 { color: var(--sky-blue); }
 
-        /* Chat Page */
-        .chat-container {
-            display: flex;
-            flex-direction: column;
-            height: calc(100vh - 80px); /* Full height minus nav */
-        }
-        .chat-header {
-            padding: 15px;
-            border-bottom: 1px solid var(--border-color);
-            font-weight: bold;
-        }
-        .chat-messages {
-            flex-grow: 1;
-            padding: 15px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column-reverse; /* New messages at bottom */
-        }
-        .message {
-            display: flex;
-            margin-bottom: 15px;
-            max-width: 80%;
-        }
-        .message.sent {
-            align-self: flex-end;
-            flex-direction: row-reverse;
-        }
-        .message img {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            margin: 0 10px;
-        }
-        .message-bubble {
-            padding: 10px 15px;
-            border-radius: 18px;
-            background-color: var(--light-gray);
-        }
-        .message.sent .message-bubble {
-            background-color: var(--sky-blue);
-            color: white;
-        }
-        .chat-input {
-            display: flex;
-            padding: 10px;
-            border-top: 1px solid var(--border-color);
-        }
-        .chat-input input {
-            flex-grow: 1;
-            padding: 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            margin-right: 10px;
-        }
-        .chat-input button {
-            background: var(--sky-blue);
-            border: none;
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-        
         /* Generic Page Styles */
         .generic-page {
             padding: 20px;
         }
         .generic-page h2 {
             color: var(--sky-blue);
+            margin-bottom: 20px;
+        }
+        .generic-page p, .generic-page li {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .generic-page ul {
+            padding-left: 20px;
+        }
+        .generic-page a {
+            color: var(--sky-blue);
+            text-decoration: none;
+        }
+        .generic-page a:hover {
+            text-decoration: underline;
         }
 
+        /* Post Feed */
+        .post-card {
+            background-color: var(--background-light);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .post-header { display: flex; align-items: center; padding: 15px; }
+        .post-header img { width: 40px; height: 40px; border-radius: 50%; margin-right: 10px; object-fit: cover; }
+        .post-header .username { font-weight: bold; }
+        .post-media { width: 100%; max-height: 600px; object-fit: contain; background-color: var(--light-gray); }
+        .post-video { width: 100%; max-height: 600px; }
+        .post-content { padding: 15px; }
+        .post-content h3 { margin: 0 0 5px 0; }
+        .post-content .meta { font-size: 14px; color: #888; margin-bottom: 10px; }
+        .post-file-attachment {
+            display: flex;
+            align-items: center;
+            background-color: var(--light-gray);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        .post-file-attachment i { font-size: 24px; color: var(--sky-blue); margin-right: 15px; }
+        .post-file-attachment a { text-decoration: none; color: var(--text-light); font-weight: bold; }
+
+        /* Library Page */
+        .library-item {
+            background-color: var(--background-light);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .library-item h3 { margin: 0 0 10px 0; }
+        .library-item .meta { color: #888; font-size: 14px; margin-bottom: 15px; }
+        .library-item .meta span { margin-right: 15px; }
+        .library-item .download-btn {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: var(--sky-blue);
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        /* Announcements Page */
+        .announcement-card {
+            background-color: var(--background-light);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .announcement-card h3 { color: var(--sky-blue); margin-top: 0; }
+        .announcement-card .meta { font-size: 12px; color: #888; border-top: 1px solid var(--border-color); padding-top: 10px; margin-top: 15px; }
+
+        /* Chat Page */
+        .chat-view { display: none; }
+        .chat-view.active { display: block; }
+        .chat-menu-container { padding: 40px 20px; text-align: center; }
+        .chat-menu-btn {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            margin-bottom: 15px;
+            font-size: 18px;
+            border: 1px solid var(--border-color);
+            background-color: var(--background-light);
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: left;
+        }
+        .chat-menu-btn i { margin-right: 15px; color: var(--sky-blue); }
+        
+        .user-list-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+        }
+        .user-list-item:hover { background-color: var(--light-gray); }
+        .user-list-item img { width: 40px; height: 40px; border-radius: 50%; margin-right: 15px; }
+
+        .chat-container { display: flex; flex-direction: column; height: calc(100vh - 80px); }
+        .chat-header { padding: 15px; border-bottom: 1px solid var(--border-color); font-weight: bold; display: flex; align-items: center; }
+        .chat-header .back-btn { margin-right: 15px; cursor: pointer; }
+        .chat-messages { flex-grow: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column-reverse; }
+        .message { display: flex; margin-bottom: 15px; max-width: 80%; }
+        .message.sent { align-self: flex-end; flex-direction: row-reverse; }
+        .message img { width: 35px; height: 35px; border-radius: 50%; margin: 0 10px; }
+        .message-bubble { padding: 10px 15px; border-radius: 18px; background-color: var(--light-gray); }
+        .message.sent .message-bubble { background-color: var(--sky-blue); color: white; }
+        .chat-input { display: flex; padding: 10px; border-top: 1px solid var(--border-color); }
+        .chat-input input { flex-grow: 1; padding: 10px; border: 1px solid var(--border-color); border-radius: 20px; margin-right: 10px; }
+        .chat-input button { background: var(--sky-blue); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; }
+        
     </style>
 </head>
 <body>
@@ -378,36 +394,111 @@
             <div class="content-container" id="posts-feed">
                 <!-- Posts will be injected here by JS -->
             </div>
-            <button class="create-post-btn" id="create-post-btn-main"><i class="fas fa-plus"></i></button>
+            <button class="fab" id="create-post-btn-main"><i class="fas fa-plus"></i></button>
         </div>
 
         <!-- LIBRARY PAGE -->
         <div id="library-page" class="page">
-            <div class="content-container generic-page">
-                <h2><i class="fas fa-swatchbook"></i> Biblioteca</h2>
-                <p>Aqui você encontrará trabalhos, projetos e monografias dos estudantes. (Funcionalidade em desenvolvimento)</p>
+            <div class="content-container">
+                <h2 style="color: var(--sky-blue);"><i class="fas fa-swatchbook"></i> Biblioteca</h2>
+                <div id="library-list">
+                    <!-- Library files will be injected here -->
+                </div>
             </div>
+            <button class="fab" id="upload-library-btn"><i class="fas fa-upload"></i></button>
         </div>
 
         <!-- ANNOUNCEMENTS PAGE -->
         <div id="announcements-page" class="page">
-            <div class="content-container generic-page">
-                <h2><i class="fas fa-bullhorn"></i> Anúncios</h2>
-                <p>Informações importantes dos administradores. (Funcionalidade em desenvolvimento)</p>
+            <div class="content-container">
+                <h2 style="color: var(--sky-blue);"><i class="fas fa-bullhorn"></i> Anúncios</h2>
+                <div id="announcements-list">
+                    <!-- Announcements will be injected here -->
+                </div>
             </div>
         </div>
 
         <!-- CHAT PAGE -->
         <div id="chat-page" class="page">
-            <div class="chat-container">
-                <div class="chat-header">Chat Global</div>
-                <div class="chat-messages" id="chat-messages-container">
-                    <!-- Messages will be injected here -->
+            <!-- Chat Menu -->
+            <div id="chat-menu-view" class="chat-view active">
+                <div class="chat-menu-container">
+                    <button class="chat-menu-btn" id="go-global-chat-btn"><i class="fas fa-users"></i> Chat Global</button>
+                    <button class="chat-menu-btn" id="go-private-chat-btn"><i class="fas fa-user"></i> Mensagem Privada</button>
                 </div>
-                <form class="chat-input" id="chat-form">
-                    <input type="text" id="chat-message-input" placeholder="Digite uma mensagem..." required>
-                    <button type="submit"><i class="fas fa-paper-plane"></i></button>
-                </form>
+            </div>
+            <!-- User List for Private Chat -->
+            <div id="user-list-view" class="chat-view">
+                 <div class="chat-header">
+                    <i class="fas fa-arrow-left back-btn" data-target="chat-menu-view"></i>
+                    <span>Iniciar Conversa</span>
+                </div>
+                <div id="user-list-container">
+                    <!-- User list will be injected here -->
+                </div>
+            </div>
+            <!-- Global Chat -->
+            <div id="global-chat-view" class="chat-view">
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <i class="fas fa-arrow-left back-btn" data-target="chat-menu-view"></i>
+                        <span>Chat Global</span>
+                    </div>
+                    <div class="chat-messages" id="global-chat-messages"></div>
+                    <form class="chat-input" id="global-chat-form">
+                        <input type="text" id="global-chat-input" placeholder="Digite uma mensagem..." required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            <!-- Private Chat -->
+            <div id="private-chat-view" class="chat-view">
+                 <div class="chat-container">
+                    <div class="chat-header">
+                        <i class="fas fa-arrow-left back-btn" data-target="user-list-view"></i>
+                        <span id="private-chat-username"></span>
+                    </div>
+                    <div class="chat-messages" id="private-chat-messages"></div>
+                    <form class="chat-input" id="private-chat-form">
+                        <input type="text" id="private-chat-input" placeholder="Digite uma mensagem..." required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ABOUT US PAGE -->
+        <div id="about-page" class="page">
+            <div class="content-container generic-page">
+                <h2><i class="fas fa-info-circle"></i> Sobre Nós</h2>
+                <p>Bem-vindo à Plataforma EV-UL, um espaço dedicado à partilha de conhecimento e à colaboração entre estudantes e criadores.</p>
+                <p>A nossa missão é criar uma comunidade vibrante onde a criatividade floresce. Aqui, você pode partilhar os seus trabalhos artísticos, projetos académicos, monografias e muito mais. Acreditamos que a partilha de ideias é a chave para o crescimento e a inovação.</p>
+                <ul>
+                    <li><strong>Início:</strong> Veja as últimas publicações da comunidade.</li>
+                    <li><strong>Biblioteca:</strong> Aceda a uma coleção de documentos, trabalhos e projetos.</li>
+                    <li><strong>Anúncios:</strong> Fique por dentro das novidades e informações importantes.</li>
+                    <li><strong>Chat:</strong> Comunique em tempo real com outros membros da plataforma.</li>
+                </ul>
+                <p>Esta plataforma foi construída com o objetivo de ser simples, intuitiva e acessível a todos. Junte-se a nós e faça parte desta jornada de conhecimento!</p>
+            </div>
+        </div>
+        
+        <!-- FAQ PAGE -->
+        <div id="faq-page" class="page">
+            <div class="content-container generic-page">
+                <h2><i class="fas fa-question-circle"></i> FAQ (Perguntas Frequentes)</h2>
+                
+                <h3>Como posso criar uma publicação?</h3>
+                <p>Na página "Início", clique no botão azul com o ícone de mais (+) no canto inferior direito. Preencha o formulário com os detalhes da sua obra e anexe um ficheiro (imagem, vídeo ou documento).</p>
+                
+                <h3>Como funciona a Biblioteca?</h3>
+                <p>A Biblioteca é um repositório de documentos. Qualquer membro pode carregar ficheiros (como PDFs, DOCs) para partilhar com a comunidade. Basta ir à página "Biblioteca" e clicar no botão de upload.</p>
+
+                <h3>O chat é privado?</h3>
+                <p>Oferecemos duas opções de chat: um "Chat Global", onde todos os membros podem conversar juntos, e "Mensagens Privadas", onde pode iniciar uma conversa um-a-um com outro utilizador da plataforma.</p>
+
+                <h3>Como posso alterar o tema do site?</h3>
+                <p>Clique no botão "Menu" na barra de navegação inferior, depois em "Definições". Lá encontrará a opção para alternar entre o tema claro e escuro.</p>
             </div>
         </div>
 
@@ -428,23 +519,50 @@
             <h2>Nova Publicação</h2>
             <form id="create-post-form">
                 <div class="form-group">
-                    <label for="post-title">Título da Obra</label>
-                    <input type="text" id="post-title">
+                    <label for="post-title">Título</label>
+                    <input type="text" id="post-title" required>
                 </div>
                 <div class="form-group">
-                    <label for="post-year">Ano</label>
-                    <input type="number" id="post-year">
+                    <label for="post-description">Legenda / Descrição</label>
+                    <textarea id="post-description" rows="4" style="width: 100%;" required></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="post-description">Descrição</label>
-                    <textarea id="post-description" rows="4" style="width: 100%;"></textarea>
+                    <label for="post-year">Ano (Opcional)</label>
+                    <input type="number" id="post-year" placeholder="Ex: 2024">
                 </div>
                 <div class="form-group">
-                    <label for="post-image">Imagem da Obra</label>
-                    <input type="file" id="post-image" accept="image/*">
+                    <label for="post-file">Anexo (Imagem, Vídeo, PDF, DOC, TXT)</label>
+                    <input type="file" id="post-file" accept="image/*,video/*,.pdf,.doc,.docx,.txt">
                 </div>
                 <button type="submit" class="btn">Publicar</button>
                 <button type="button" class="btn btn-secondary" data-close-modal="create-post-modal">Cancelar</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Upload to Library Modal -->
+    <div id="upload-library-modal" class="modal">
+        <div class="modal-content">
+            <h2>Carregar para a Biblioteca</h2>
+            <form id="upload-library-form">
+                <div class="form-group">
+                    <label for="library-title">Título do Documento</label>
+                    <input type="text" id="library-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="library-author">Autor</label>
+                    <input type="text" id="library-author" required>
+                </div>
+                <div class="form-group">
+                    <label for="library-pages">Número de Páginas</label>
+                    <input type="number" id="library-pages" required>
+                </div>
+                <div class="form-group">
+                    <label for="library-file">Ficheiro (PDF, DOC, etc.)</label>
+                    <input type="file" id="library-file" accept=".pdf,.doc,.docx,.txt" required>
+                </div>
+                <button type="submit" class="btn">Carregar</button>
+                <button type="button" class="btn btn-secondary" data-close-modal="upload-library-modal">Cancelar</button>
             </form>
         </div>
     </div>
@@ -454,9 +572,9 @@
         <div class="modal-content">
             <h2>Menu</h2>
             <ul style="list-style: none; padding: 0;">
-                <li style="padding: 15px 0; border-bottom: 1px solid var(--border-color);"><a href="#" id="settings-btn" style="text-decoration: none; color: var(--text-light);">Definições</a></li>
-                <li style="padding: 15px 0; border-bottom: 1px solid var(--border-color);"><a href="#" style="text-decoration: none; color: var(--text-light);">Sobre Nós</a></li>
-                <li style="padding: 15px 0; border-bottom: 1px solid var(--border-color);"><a href="#" style="text-decoration: none; color: var(--text-light);">FAQ</a></li>
+                <li style="padding: 15px 0; border-bottom: 1px solid var(--border-color);"><a href="#" class="menu-link" data-page="settings-modal" style="text-decoration: none; color: var(--text-light);">Definições</a></li>
+                <li style="padding: 15px 0; border-bottom: 1px solid var(--border-color);"><a href="#" class="menu-link" data-page="about-page" style="text-decoration: none; color: var(--text-light);">Sobre Nós</a></li>
+                <li style="padding: 15px 0; border-bottom: 1px solid var(--border-color);"><a href="#" class="menu-link" data-page="faq-page" style="text-decoration: none; color: var(--text-light);">FAQ</a></li>
                 <li style="padding: 15px 0;"><a href="#" id="logout-btn" style="text-decoration: none; color: var(--sky-blue);">Logout</a></li>
             </ul>
             <button type="button" class="btn btn-secondary" data-close-modal="menu-modal">Fechar</button>
@@ -486,7 +604,7 @@
         const SUPABASE_URL = 'https://eingoehjrlelhjgncozr.supabase.co'; 
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVpbmdvZWhqcmxlbGhqZ25jb3pyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk3OTIyNzUsImV4cCI6MjA2NTM2ODI3NX0.wUtRDUae7VeRnN8Ahnc1ZhtAukaHUOXmn7zirS81GAw';
 
-        if (SUPABASE_URL === 'SUA_URL_SUPABASE' || SUPABASE_ANON_KEY === 'SUA_CHAVE_ANON_SUPABASE') {
+        if (SUPABASE_URL.includes('SUA_URL') || SUPABASE_ANON_KEY.includes('SUA_CHAVE')) {
             alert('Por favor, configure sua URL e chave anônima do Supabase no código HTML para o site funcionar.');
         }
 
@@ -495,8 +613,6 @@
 
         // --- DOM ELEMENTS ---
         const authContainer = document.getElementById('auth-container');
-        const loginPage = document.getElementById('login-page');
-        const signupPage = document.getElementById('signup-page');
         const appContainer = document.getElementById('app-container');
         const appPages = document.querySelectorAll('#app-container .page');
         const navButtons = document.querySelectorAll('.nav-btn');
@@ -504,70 +620,84 @@
 
         // --- STATE ---
         let currentUser = null;
+        let currentChatSubscription = null;
+        let currentPrivateChatSubscription = null;
+        let privateChatTarget = { id: null, username: null };
 
-        // --- PAGE NAVIGATION ---
-        function showAuthPage(pageToShow) {
-            loginPage.classList.toggle('active', pageToShow === 'login');
-            signupPage.classList.toggle('active', pageToShow === 'signup');
-        }
-
-        function showAppPage(pageId) {
+        // --- PAGE & MODAL NAVIGATION ---
+        function showPage(pageId) {
             appPages.forEach(p => p.classList.remove('active'));
             const newPage = document.getElementById(pageId);
-            if (newPage) newPage.classList.add('active');
-
-            navButtons.forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.page === pageId);
-            });
+            if (newPage) {
+                newPage.classList.add('active');
+                // Fetch data for the new page
+                if (pageId === 'home-page') fetchPosts();
+                if (pageId === 'library-page') fetchLibraryFiles();
+                if (pageId === 'announcements-page') fetchAnnouncements();
+                if (pageId === 'chat-page') showChatView('chat-menu-view');
+            }
+            navButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.page === pageId));
         }
 
-        document.getElementById('go-to-signup-btn').addEventListener('click', () => showAuthPage('signup'));
-        document.getElementById('go-to-login-btn').addEventListener('click', () => showAuthPage('login'));
-        
-        navButtons.forEach(button => {
-            if (button.dataset.page) {
-                button.addEventListener('click', () => showAppPage(button.dataset.page));
-            }
-        });
-
-        // --- MODAL HANDLING ---
         function showModal(modalId) {
             const modal = document.getElementById(modalId);
             if(modal) modal.classList.add('active');
         }
-        function hideModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if(modal) modal.classList.remove('active');
+        function hideAllModals() {
+            modals.forEach(modal => modal.classList.remove('active'));
         }
 
+        document.getElementById('go-to-signup-btn').addEventListener('click', () => {
+            document.getElementById('login-page').classList.remove('active');
+            document.getElementById('signup-page').classList.add('active');
+        });
+        document.getElementById('go-to-login-btn').addEventListener('click', () => {
+            document.getElementById('signup-page').classList.remove('active');
+            document.getElementById('login-page').classList.add('active');
+        });
+        
+        navButtons.forEach(button => {
+            if (button.dataset.page) {
+                button.addEventListener('click', () => showPage(button.dataset.page));
+            }
+        });
+
         document.getElementById('create-post-btn-main').addEventListener('click', () => showModal('create-post-modal'));
+        document.getElementById('upload-library-btn').addEventListener('click', () => showModal('upload-library-modal'));
         document.getElementById('menu-btn').addEventListener('click', () => showModal('menu-modal'));
-        document.getElementById('settings-btn').addEventListener('click', () => {
-            hideModal('menu-modal');
-            showModal('settings-modal');
-            loadSettings();
+
+        document.querySelectorAll('.menu-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.dataset.page;
+                hideAllModals();
+                if (targetId.endsWith('-modal')) {
+                    showModal(targetId);
+                    if (targetId === 'settings-modal') loadSettings();
+                } else {
+                    showPage(targetId);
+                }
+            });
         });
 
         modals.forEach(modal => {
             modal.addEventListener('click', (e) => {
                 if (e.target.classList.contains('modal') || e.target.dataset.closeModal) {
-                    hideModal(modal.id);
+                    hideAllModals();
                 }
             });
         });
         document.querySelectorAll('[data-close-modal]').forEach(btn => {
-            btn.addEventListener('click', () => hideModal(btn.dataset.closeModal));
+            btn.addEventListener('click', () => hideAllModals());
         });
 
         // --- THEME SWITCHER ---
-        const themeToggleBtn = document.getElementById('theme-toggle-btn');
-        themeToggleBtn.addEventListener('click', () => {
+        document.getElementById('theme-toggle-btn').addEventListener('click', () => {
             document.body.classList.toggle('dark-theme');
         });
 
         // --- AUTHENTICATION ---
-        const loginForm = document.getElementById('login-form');
-        loginForm.addEventListener('submit', async (e) => {
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
@@ -575,191 +705,333 @@
             if (error) alert('Erro no login: ' + error.message);
         });
 
-        const signupForm = document.getElementById('signup-form');
-        signupForm.addEventListener('submit', async (e) => {
+        document.getElementById('signup-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('signup-email').value;
             const password = document.getElementById('signup-password').value;
             const username = document.getElementById('signup-username').value;
             
-            const { data, error } = await db.auth.signUp({
-                email,
-                password,
-                options: {
-                    data: {
-                        username: username,
-                        avatar_url: `https://api.dicebear.com/8.x/initials/svg?seed=${encodeURIComponent(username)}`
-                    }
-                }
+            const { error } = await db.auth.signUp({
+                email, password,
+                options: { data: { username: username, avatar_url: `https://api.dicebear.com/8.x/initials/svg?seed=${encodeURIComponent(username)}` } }
             });
-            if (error) {
-                alert('Erro no registro: ' + error.message);
-            } else {
-                alert('Registro bem-sucedido! Por favor, verifique seu e-mail para confirmar a conta.');
-                showAuthPage('login');
+            if (error) alert('Erro no registro: ' + error.message);
+            else {
+                alert('Registro bem-sucedido! Verifique seu e-mail para confirmar a conta.');
+                document.getElementById('signup-page').classList.remove('active');
+                document.getElementById('login-page').classList.add('active');
             }
         });
 
-        const logoutBtn = document.getElementById('logout-btn');
-        logoutBtn.addEventListener('click', async () => {
+        document.getElementById('logout-btn').addEventListener('click', async () => {
             await db.auth.signOut();
-            hideModal('menu-modal');
+            hideAllModals();
         });
 
-        // --- AUTH STATE CHANGE ---
         db.auth.onAuthStateChange((event, session) => {
             if (session) {
                 currentUser = session.user;
                 authContainer.style.display = 'none';
                 appContainer.style.display = 'block';
-                showAppPage('home-page');
-                fetchPosts();
-                listenToMessages();
+                showPage('home-page');
+                listenToGlobalMessages();
             } else {
                 currentUser = null;
                 authContainer.style.display = 'block';
                 appContainer.style.display = 'none';
-                showAuthPage('login');
+                document.getElementById('login-page').classList.add('active');
+                if (currentChatSubscription) currentChatSubscription.unsubscribe();
+                if (currentPrivateChatSubscription) currentPrivateChatSubscription.unsubscribe();
             }
         });
 
         // --- POSTS ---
         const postsFeed = document.getElementById('posts-feed');
         async function fetchPosts() {
-            const { data: posts, error } = await db
-                .from('posts')
-                .select(`
-                    *,
-                    profiles ( username, avatar_url )
-                `)
-                .order('created_at', { ascending: false });
-
-            if (error) {
-                console.error('Erro ao buscar posts:', error);
-                return;
-            }
+            const { data: posts, error } = await db.from('posts').select(`*, profiles ( username, avatar_url )`).order('created_at', { ascending: false });
+            if (error) { console.error('Erro ao buscar posts:', error); return; }
             
             postsFeed.innerHTML = '';
-            for (const post of posts) {
+            posts.forEach(post => {
                 const postEl = document.createElement('div');
                 postEl.className = 'post-card';
+                
+                let mediaHTML = '';
+                if (post.media_url) {
+                    if (post.media_type === 'image') {
+                        mediaHTML = `<img src="${post.media_url}" class="post-media">`;
+                    } else if (post.media_type === 'video') {
+                        mediaHTML = `<video src="${post.media_url}" class="post-video" controls></video>`;
+                    } else if (post.media_type === 'document') {
+                        mediaHTML = `
+                            <div class="post-file-attachment">
+                                <i class="fas fa-file-alt"></i>
+                                <a href="${post.media_url}" target="_blank" download>Ver Documento Anexado</a>
+                            </div>`;
+                    }
+                }
+
                 postEl.innerHTML = `
                     <div class="post-header">
-                        <img src="${post.profiles.avatar_url || 'https://api.dicebear.com/8.x/initials/svg?seed=?'}" alt="Avatar">
-                        <span class="username">${post.profiles.username || 'Usuário Anônimo'}</span>
+                        <img src="${post.profiles.avatar_url || ''}" alt="Avatar">
+                        <span class="username">${post.profiles.username || 'Anônimo'}</span>
                     </div>
-                    ${post.media_url ? `<img src="${post.media_url}" class="post-media">` : ''}
                     <div class="post-content">
                         <h3>${post.title || ''}</h3>
-                        <p class="meta">${post.year || ''}</p>
                         <p>${post.description || ''}</p>
+                        ${mediaHTML}
+                        <p class="meta">${post.year || ''}</p>
                     </div>
                 `;
                 postsFeed.appendChild(postEl);
-            }
+            });
         }
 
-        const createPostForm = document.getElementById('create-post-form');
-        createPostForm.addEventListener('submit', async (e) => {
+        document.getElementById('create-post-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             if (!currentUser) return;
 
             const title = document.getElementById('post-title').value;
-            const year = document.getElementById('post-year').value;
             const description = document.getElementById('post-description').value;
-            const imageFile = document.getElementById('post-image').files[0];
-            let mediaUrl = null;
+            const year = document.getElementById('post-year').value;
+            const file = document.getElementById('post-file').files[0];
+            let media_url = null;
+            let media_type = null;
 
-            if (imageFile) {
-                const filePath = `public/${currentUser.id}/${Date.now()}-${imageFile.name}`;
-                const { error: uploadError } = await db.storage.from('posts-media').upload(filePath, imageFile);
-                if (uploadError) {
-                    alert('Erro ao enviar imagem: ' + uploadError.message);
-                    return;
-                }
+            if (file) {
+                const filePath = `public/${currentUser.id}/${Date.now()}-${file.name}`;
+                const { error: uploadError } = await db.storage.from('posts-media').upload(filePath, file);
+                if (uploadError) { alert('Erro ao enviar ficheiro: ' + uploadError.message); return; }
                 const { data } = db.storage.from('posts-media').getPublicUrl(filePath);
-                mediaUrl = data.publicUrl;
+                media_url = data.publicUrl;
+                if (file.type.startsWith('image/')) media_type = 'image';
+                else if (file.type.startsWith('video/')) media_type = 'video';
+                else media_type = 'document';
             }
 
             const { error: insertError } = await db.from('posts').insert({
-                user_id: currentUser.id,
-                title,
-                year,
-                description,
-                media_url: mediaUrl
+                user_id: currentUser.id, title, description, year, media_url, media_type
             });
 
-            if (insertError) {
-                alert('Erro ao criar post: ' + insertError.message);
-            } else {
-                hideModal('create-post-modal');
-                createPostForm.reset();
-                fetchPosts(); // Refresh feed
+            if (insertError) alert('Erro ao criar post: ' + insertError.message);
+            else {
+                hideAllModals();
+                e.target.reset();
+                fetchPosts();
             }
         });
+
+        // --- LIBRARY ---
+        const libraryList = document.getElementById('library-list');
+        async function fetchLibraryFiles() {
+            const { data, error } = await db.from('library_files').select('*').order('created_at', { ascending: false });
+            if (error) { console.error('Error fetching library files:', error); return; }
+            
+            libraryList.innerHTML = '';
+            data.forEach(file => {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'library-item';
+                itemEl.innerHTML = `
+                    <h3>${file.title}</h3>
+                    <div class="meta">
+                        <span><i class="fas fa-user"></i> Autor: ${file.author_name}</span>
+                        <span><i class="fas fa-file-alt"></i> Páginas: ${file.page_count}</span>
+                        <span><i class="fas fa-hdd"></i> Tamanho: ${file.file_size_kb} KB</span>
+                    </div>
+                    <a href="${file.file_url}" class="download-btn" target="_blank" download="${file.file_name}">Download</a>
+                `;
+                libraryList.appendChild(itemEl);
+            });
+        }
+
+        document.getElementById('upload-library-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const file = document.getElementById('library-file').files[0];
+            if (!file || !currentUser) return;
+
+            const filePath = `library/${currentUser.id}/${Date.now()}-${file.name}`;
+            const { error: uploadError } = await db.storage.from('library-docs').upload(filePath, file);
+            if (uploadError) { alert('Erro ao carregar ficheiro: ' + uploadError.message); return; }
+            
+            const { data: urlData } = db.storage.from('library-docs').getPublicUrl(filePath);
+
+            const { error: insertError } = await db.from('library_files').insert({
+                user_id: currentUser.id,
+                title: document.getElementById('library-title').value,
+                author_name: document.getElementById('library-author').value,
+                page_count: document.getElementById('library-pages').value,
+                file_url: urlData.publicUrl,
+                file_size_kb: Math.round(file.size / 1024),
+                file_name: file.name
+            });
+
+            if (insertError) alert('Erro ao guardar dados: ' + insertError.message);
+            else {
+                hideAllModals();
+                e.target.reset();
+                fetchLibraryFiles();
+            }
+        });
+
+        // --- ANNOUNCEMENTS ---
+        const announcementsList = document.getElementById('announcements-list');
+        async function fetchAnnouncements() {
+            const { data, error } = await db.from('announcements').select('*').order('created_at', { ascending: false });
+            if (error) { console.error('Error fetching announcements:', error); return; }
+
+            announcementsList.innerHTML = '';
+            data.forEach(ann => {
+                const cardEl = document.createElement('div');
+                cardEl.className = 'announcement-card';
+                cardEl.innerHTML = `
+                    <h3>${ann.title}</h3>
+                    <p>${ann.content}</p>
+                    <div class="meta">
+                        <strong>Informante:</strong> ${ann.informant} | <strong>Fonte:</strong> ${ann.source}
+                    </div>
+                `;
+                announcementsList.appendChild(cardEl);
+            });
+        }
 
         // --- CHAT ---
-        const chatForm = document.getElementById('chat-form');
-        const chatInput = document.getElementById('chat-message-input');
-        const messagesContainer = document.getElementById('chat-messages-container');
+        function showChatView(viewId) {
+            document.querySelectorAll('#chat-page .chat-view').forEach(v => v.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+        }
 
-        chatForm.addEventListener('submit', async (e) => {
+        document.querySelectorAll('#chat-page .back-btn').forEach(btn => {
+            btn.addEventListener('click', () => showChatView(btn.dataset.target));
+        });
+
+        document.getElementById('go-global-chat-btn').addEventListener('click', () => {
+            showChatView('global-chat-view');
+            fetchInitialGlobalMessages();
+        });
+        document.getElementById('go-private-chat-btn').addEventListener('click', async () => {
+            await fetchUsersForChat();
+            showChatView('user-list-view');
+        });
+
+        // Chat: Global
+        const globalChatForm = document.getElementById('global-chat-form');
+        const globalChatInput = document.getElementById('global-chat-input');
+        const globalMessagesContainer = document.getElementById('global-chat-messages');
+
+        globalChatForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const messageText = chatInput.value.trim();
+            const messageText = globalChatInput.value.trim();
             if (messageText && currentUser) {
-                await db.from('messages').insert({
-                    user_id: currentUser.id,
-                    content: messageText
-                });
-                chatInput.value = '';
+                await db.from('messages').insert({ user_id: currentUser.id, content: messageText });
+                globalChatInput.value = '';
             }
         });
 
-        function listenToMessages() {
-            db.channel('public:messages')
+        function listenToGlobalMessages() {
+            if (currentChatSubscription) currentChatSubscription.unsubscribe();
+            currentChatSubscription = db.channel('public:messages')
                 .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, payload => {
-                    fetchAndRenderMessage(payload.new.id);
+                    fetchAndRenderMessage(payload.new.id, globalMessagesContainer, true);
                 })
                 .subscribe();
-            
-            fetchInitialMessages();
         }
 
-        async function fetchInitialMessages() {
-            const { data, error } = await db
-                .from('messages')
-                .select(`*, profiles(username, avatar_url)`)
-                .order('created_at', { ascending: false })
-                .limit(50);
-            
-            if (error) return;
-            messagesContainer.innerHTML = '';
-            data.reverse().forEach(msg => renderMessage(msg));
-        }
-        
-        async function fetchAndRenderMessage(messageId) {
-             const { data: msg, error } = await db
-                .from('messages')
-                .select(`*, profiles(username, avatar_url)`)
-                .eq('id', messageId)
-                .single();
-            if (error) return;
-            renderMessage(msg);
+        async function fetchInitialGlobalMessages() {
+            const { data } = await db.from('messages').select(`*, profiles(username, avatar_url)`).order('created_at', { ascending: false }).limit(50);
+            globalMessagesContainer.innerHTML = '';
+            if (data) data.reverse().forEach(msg => renderMessage(msg, globalMessagesContainer, true));
         }
 
-        function renderMessage(message) {
+        // Chat: Private
+        const userListContainer = document.getElementById('user-list-container');
+        const privateChatForm = document.getElementById('private-chat-form');
+        const privateChatInput = document.getElementById('private-chat-input');
+        const privateMessagesContainer = document.getElementById('private-chat-messages');
+
+        async function fetchUsersForChat() {
+            const { data, error } = await db.from('profiles').select('*').neq('id', currentUser.id);
+            if (error) { console.error('Error fetching users:', error); return; }
+            
+            userListContainer.innerHTML = '';
+            data.forEach(user => {
+                const userEl = document.createElement('div');
+                userEl.className = 'user-list-item';
+                userEl.innerHTML = `<img src="${user.avatar_url}" alt="Avatar"><span>${user.username}</span>`;
+                userEl.addEventListener('click', () => startPrivateChat(user.id, user.username));
+                userListContainer.appendChild(userEl);
+            });
+        }
+
+        function startPrivateChat(userId, username) {
+            privateChatTarget = { id: userId, username: username };
+            document.getElementById('private-chat-username').textContent = username;
+            showChatView('private-chat-view');
+            fetchInitialPrivateMessages();
+            listenToPrivateMessages();
+        }
+
+        privateChatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const content = privateChatInput.value.trim();
+            if (content && currentUser && privateChatTarget.id) {
+                await db.from('private_messages').insert({
+                    sender_id: currentUser.id,
+                    receiver_id: privateChatTarget.id,
+                    content
+                });
+                privateChatInput.value = '';
+            }
+        });
+
+        function listenToPrivateMessages() {
+            if (currentPrivateChatSubscription) currentPrivateChatSubscription.unsubscribe();
+            const channelName = `private-chat-${[currentUser.id, privateChatTarget.id].sort().join('-')}`;
+            currentPrivateChatSubscription = db.channel(channelName)
+                .on('postgres_changes', { 
+                    event: 'INSERT', 
+                    schema: 'public', 
+                    table: 'private_messages',
+                    filter: `receiver_id=eq.${currentUser.id}`
+                }, payload => {
+                    fetchAndRenderMessage(payload.new.id, privateMessagesContainer, false);
+                })
+                .subscribe();
+        }
+
+        async function fetchInitialPrivateMessages() {
+            const { data } = await db.from('private_messages')
+                .select(`*, sender:profiles!private_messages_sender_id_fkey(username, avatar_url)`)
+                .or(`(sender_id.eq.${currentUser.id},receiver_id.eq.${privateChatTarget.id}),(sender_id.eq.${privateChatTarget.id},receiver_id.eq.${currentUser.id})`)
+                .order('created_at', { ascending: false }).limit(50);
+            
+            privateMessagesContainer.innerHTML = '';
+            if (data) data.reverse().forEach(msg => renderMessage(msg, privateMessagesContainer, false));
+        }
+
+        // Chat: Generic Message Rendering
+        async function fetchAndRenderMessage(messageId, container, isGlobal) {
+             const query = isGlobal
+                ? db.from('messages').select(`*, profiles(username, avatar_url)`).eq('id', messageId).single()
+                : db.from('private_messages').select(`*, sender:profiles!private_messages_sender_id_fkey(username, avatar_url)`).eq('id', messageId).single();
+            const { data: msg } = await query;
+            if (msg) renderMessage(msg, container, isGlobal);
+        }
+
+        function renderMessage(message, container, isGlobal) {
             const messageEl = document.createElement('div');
-            const isSent = message.user_id === currentUser.id;
-            messageEl.className = `message ${isSent ? 'sent' : 'received'}`;
+            const senderId = isGlobal ? message.user_id : message.sender_id;
+            const profile = isGlobal ? message.profiles : message.sender;
+            const isSent = senderId === currentUser.id;
             
+            messageEl.className = `message ${isSent ? 'sent' : 'received'}`;
             messageEl.innerHTML = `
-                <img src="${message.profiles.avatar_url}" alt="Avatar">
+                <img src="${profile.avatar_url}" alt="Avatar">
                 <div class="message-bubble">
-                    ${!isSent ? `<strong>${message.profiles.username}</strong><br>` : ''}
+                    ${!isSent && isGlobal ? `<strong>${profile.username}</strong><br>` : ''}
                     ${message.content}
                 </div>
             `;
-            messagesContainer.prepend(messageEl);
+            container.prepend(messageEl);
         }
 
         // --- SETTINGS ---
@@ -774,4 +1046,3 @@
 
 </body>
 </html>
- 
